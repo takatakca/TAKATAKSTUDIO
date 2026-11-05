@@ -37,3 +37,12 @@ Read `03_ECOSYSTEM_INTEGRATION.md`. Studio is now a child production service und
 Focused tests: V1 11 PASS, Studio 8 PASS; TS/TSX and browser JS syntax PASS; pure V1 Studio module semantic check PASS. Full framework dependency installation was rejected by automatic approval review; do not bypass via another installer or CI. Commits are marked skip-ci until authorization resolves that validation step. No deploy, migration, provider spend or private KnowledgeAI ingestion.
 
 Next: exact draft review and full checks authorization, Studio entitlement/commercial model, canonical KnowledgeAI PR #194/#195 consolidation, authenticated job exchange and media workers. Source commit/PR receipts are recorded after publication in the signed integration checkpoint.
+
+
+## 2026-11-05 — Design and agent continuation
+
+See `05_DESIGN_AGENT_CHECKPOINT.md`: redesigned V1 Studio, manual scene editor, four text drafting formats, bounded daily task source and selected-account Social review. V1 PR #256 remains a draft. Academy receives a six-lesson training course in its own draft. Flags are off; full framework/database checks and genuine publishing/rendering remain outstanding. 19 focused tests pass and synthetic browser scene/queue flows were exercised. Existing Python engine remains local with explicit file exchange.
+
+— STUDIO-ENGINE — Codex
+
+Saved source: V1 `48d028a245b88a0400c4f9dde4412dc07b675b67` (draft #256); Academy `704d766ad4119d8801367ce8afa3e8626cd8f4fd` (draft #2). 19 V1 + 2 Academy focused checks passed. See `05_DESIGN_AGENT_CHECKPOINT.md` for exact boundaries. — STUDIO-ENGINE — Codex

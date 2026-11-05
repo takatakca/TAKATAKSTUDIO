@@ -49,3 +49,12 @@ Signed: STUDIO-ENGINE — Codex
 2026-11-05 — STUDIO-ENGINE (new owner direction / before integration): Owner expanded scope to multi-client resale integrated with takatak-v1, TAK-TAK and KnowledgeAI. Inventoried 83 repositories and inspected the core source plus related product READMEs. Claimed work on foodhubca #105. V1 stays identity/credit authority; preserve open KnowledgeAI #194/#195.
 2026-11-05 — STUDIO-ENGINE (during integration): Prepared guarded V1 project/drafting UI and routes reusing central provider keys and TAK-TAK credit ledger. Added explicit two-way creative-brief file exchange; discarded imported tenant/approval authority; pinned Studio character snapshots. Full framework dependency install was rejected by automatic review; no workaround attempted.
 2026-11-05 — STUDIO-ENGINE (after focused validation): 11 V1 contract/service tests and pure-module semantic checks PASS; new TS/TSX syntax checks PASS. Studio 8 tests and browser-script syntax PASS. No production rollout, complete V1 build, confidential KnowledgeAI retrieval, media generation/rendering or publication. See docs/03_ECOSYSTEM_INTEGRATION.md for exact scope and pending work.
+
+
+## 2026-11-05 — Design and agent continuation
+
+See `05_DESIGN_AGENT_CHECKPOINT.md`: redesigned V1 Studio, manual scene editor, four text drafting formats, bounded daily task source and selected-account Social review. V1 PR #256 remains a draft. Academy receives a six-lesson training course in its own draft. Flags are off; full framework/database checks and genuine publishing/rendering remain outstanding. 19 focused tests pass and synthetic browser scene/queue flows were exercised. Existing Python engine remains local with explicit file exchange.
+
+— STUDIO-ENGINE — Codex
+
+Saved source: V1 `48d028a245b88a0400c4f9dde4412dc07b675b67` (draft #256); Academy `704d766ad4119d8801367ce8afa3e8626cd8f4fd` (draft #2). 19 V1 + 2 Academy focused checks passed. See `05_DESIGN_AGENT_CHECKPOINT.md` for exact boundaries. — STUDIO-ENGINE — Codex
