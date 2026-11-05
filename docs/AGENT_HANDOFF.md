@@ -29,3 +29,11 @@ A private Sites registration exists from initial workspace exploration (project 
 ## Synchronization
 
 Commit SHA will be recorded in a separate signed release receipt after the source commit is pushed (a commit cannot embed its own SHA). Final response and Drive receipt must carry that exact SHA. No secrets belong in any of these notes.
+
+## 2026-11-05 — V1/KnowledgeAI integration continuation
+
+Read `03_ECOSYSTEM_INTEGRATION.md`. Studio is now a child production service under V1's canonical identity/commercial authority. A V1 draft candidate reuses TAK-TAK's provider/credit/saved-output workflow for text drafting. Studio and V1 share a version-1 request-pack file format. Local import discards approval/tenant authority and snapshots characters per project. This is not live automatic synchronization.
+
+Focused tests: V1 11 PASS, Studio 8 PASS; TS/TSX and browser JS syntax PASS; pure V1 Studio module semantic check PASS. Full framework dependency installation was rejected by automatic approval review; do not bypass via another installer or CI. Commits are marked skip-ci until authorization resolves that validation step. No deploy, migration, provider spend or private KnowledgeAI ingestion.
+
+Next: exact draft review and full checks authorization, Studio entitlement/commercial model, canonical KnowledgeAI PR #194/#195 consolidation, authenticated job exchange and media workers. Source commit/PR receipts are recorded after publication in the signed integration checkpoint.

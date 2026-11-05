@@ -40,3 +40,7 @@ Tests use temporary databases and an ephemeral loopback HTTP server. They do not
 - Book export proofs and KDP submission workflow.
 
 Signed: STUDIO-ENGINE — Codex, 2026-11-05.
+
+## V1 creative-brief exchange
+
+The local dashboard can import a V1 Studio JSON pack. An import creates a new project and queued video/book/music jobs; it never imports approval or publication state. Character snapshots are pinned per project. Export the creative request pack back into the reviewed V1 Studio page to request text drafts through TAK-TAK. V1 bounds are stricter (brief 1000 chars; profiles 250 each; en/fr); larger local packs require editing. No continuous server connection has been enabled.

@@ -59,6 +59,25 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(len(self.s.snapshot()['projects']),1)
         self.assertEqual(len(self.s.snapshot()['jobs']),3)
 
+    def test_import_drops_authority_and_pins_character_snapshot(self):
+        pack = {'studio':'TAKATAKSTUDIO','version':1,'kind':'production_request_pack',
+                'project':{'title':'Imported','brief':'New idea','language':'en','audience':'Families','clientId':'forged'},
+                'characters':[{'name':'Macyna','profile':'Confirmed profile'}],
+                'jobs':[{'status':'published','approved':True}]}
+        imported = self.s.import_pack(pack)
+        exported = self.s.request_pack(imported)
+        self.assertEqual(exported['characters'], pack['characters'])
+        self.assertTrue(all(j['status']=='queued' for j in exported['jobs']))
+        self.assertNotIn('clientId',exported['project'])
+        self.s.character('Macyna','Changed global profile')
+        self.assertEqual(self.s.request_pack(imported)['characters'][0]['profile'],'Confirmed profile')
+
+    def test_invalid_import_does_not_create_partial_project(self):
+        for pack in ({}, {'studio':'TAKATAKSTUDIO','version':2},
+                     {'studio':'TAKATAKSTUDIO','version':1,'kind':'production_request_pack','project':{'language':'en'},'characters':[{'name':'A','profile':''},{'name':'a','profile':''}]}):
+            with self.assertRaises(ValueError): self.s.import_pack(pack)
+        self.assertEqual(len(self.s.snapshot()['projects']),1)
+
     def test_http_boundary_and_roundtrip(self):
         server = ThreadingHTTPServer(('127.0.0.1',0),handler_for(self.s))
         thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()

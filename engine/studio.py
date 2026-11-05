@@ -28,6 +28,9 @@ class Studio:
               target_date TEXT NOT NULL DEFAULT '', attempts INTEGER NOT NULL DEFAULT 0,
               error TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL,
               UNIQUE(project_id, track));
+            CREATE TABLE IF NOT EXISTS project_characters (
+              project_id TEXT NOT NULL REFERENCES projects(id), name TEXT NOT NULL, profile TEXT NOT NULL,
+              PRIMARY KEY(project_id, name));
             CREATE TABLE IF NOT EXISTS events (
               id INTEGER PRIMARY KEY, job_id TEXT, action TEXT NOT NULL,
               detail TEXT NOT NULL, created_at TEXT NOT NULL);
@@ -62,7 +65,7 @@ class Studio:
         ]
         return result
 
-    def create_project(self, data):
+    def create_project(self, data, characters=None):
         fields = {}
         for key in ('title', 'brief', 'language', 'audience'):
             value = data.get(key, '')
@@ -73,12 +76,37 @@ class Studio:
         with self.connect() as db:
             db.execute('INSERT INTO projects VALUES (?,?,?,?,?,?)',
                        (pid, fields['title'], fields['brief'], fields['language'], fields['audience'], now()))
+            snapshot = characters if characters is not None else [dict(r) for r in db.execute('SELECT * FROM characters ORDER BY rowid')]
+            db.executemany('INSERT INTO project_characters(project_id,name,profile) VALUES (?,?,?)',
+                           [(pid, c['name'], c['profile']) for c in snapshot])
             for track in TRACKS:
                 jid = str(uuid.uuid4())
                 db.execute('INSERT INTO jobs(id,project_id,track,status,created_at) VALUES (?,?,?,?,?)',
                            (jid, pid, track, 'queued', now()))
                 self.event(db, jid, 'queued', track + ' track created')
         return pid
+
+    def import_pack(self, pack):
+        if not isinstance(pack, dict) or pack.get('studio') != 'TAKATAKSTUDIO' or pack.get('version') != 1 or pack.get('kind') != 'production_request_pack':
+            raise ValueError('Unsupported Studio request pack')
+        project = pack.get('project')
+        if not isinstance(project, dict) or project.get('language') not in ('en', 'fr'):
+            raise ValueError('Choose en or fr for the imported production')
+        characters = pack.get('characters')
+        if not isinstance(characters, list) or len(characters) > 3:
+            raise ValueError('Import supports up to three character profiles')
+        clean = []
+        for c in characters:
+            if not isinstance(c, dict):
+                raise ValueError('Invalid character')
+            name, profile = c.get('name'), c.get('profile')
+            if not isinstance(name, str) or not name.strip() or len(name) > 60 or not isinstance(profile, str) or len(profile) > 250:
+                raise ValueError('Invalid character profile')
+            if any(old['name'].casefold() == name.strip().casefold() for old in clean):
+                raise ValueError('Duplicate character')
+            clean.append({'name': name.strip(), 'profile': profile})
+        # Import creative data only. Caller-supplied IDs, jobs, approvals and tenant claims are discarded.
+        return self.create_project(project, characters=clean)
 
     def character(self, name, profile):
         if name not in NAMES or not isinstance(profile, str) or len(profile) > 12000:
@@ -134,7 +162,7 @@ class Studio:
             if row is None:
                 raise ValueError('Project not found')
             project = dict(row)
-            characters = [dict(r) for r in db.execute('SELECT * FROM characters ORDER BY rowid')]
+            characters = [dict(r) for r in db.execute('SELECT name,profile FROM project_characters WHERE project_id=? ORDER BY rowid', (pid,))]
             jobs = [dict(r) for r in db.execute('SELECT * FROM jobs WHERE project_id=?', (pid,))]
         return {'studio': 'TAKATAKSTUDIO', 'version': 1, 'kind': 'production_request_pack',
                 'project': project, 'characters': characters, 'jobs': jobs,

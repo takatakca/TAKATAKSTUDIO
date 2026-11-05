@@ -56,6 +56,8 @@ def handler_for(studio):
                 data = json.loads(self.rfile.read(length))
                 if not isinstance(data, dict):
                     raise ValueError('JSON object required')
+                if self.path == '/api/import':
+                    return self.send(201, {'id': studio.import_pack(data)})
                 if self.path == '/api/projects':
                     return self.send(201, {'id': studio.create_project(data)})
                 if self.path == '/api/characters':
