@@ -46,3 +46,18 @@ See `05_DESIGN_AGENT_CHECKPOINT.md`: redesigned V1 Studio, manual scene editor, 
 — STUDIO-ENGINE — Codex
 
 Saved source: V1 `48d028a245b88a0400c4f9dde4412dc07b675b67` (draft #256); Academy `704d766ad4119d8801367ce8afa3e8626cd8f4fd` (draft #2). 19 V1 + 2 Academy focused checks passed. See `05_DESIGN_AGENT_CHECKPOINT.md` for exact boundaries. — STUDIO-ENGINE — Codex
+
+
+## Latest continuation — premium workspace and cost control
+
+See `06_PREMIUM_COST_SAFETY_CHECKPOINT.md` for the resumed source, user direction, tenant/worker/scene/handoff safety, retail-versus-supplier cost controls, manual SONGER boundary and actual verification limits. Preserve V1 #256, Academy #2 and KnowledgeAI #7; do not replay ambiguous operations or activate the scheduler. — STUDIO-ENGINE — Codex
+
+
+## Saved continuation source receipts
+
+- V1 draft PR #256: `bb80d0cce4a0fe640b5a07d35114b7bdcbf55a96` — https://github.com/takatakca/takatak-v1/pull/256
+- Academy draft PR #2: `2f939ae67972274b66cb88c8bf9067f72dbf856c` — https://github.com/takatakca/ACADEMYTAKATAK/pull/2
+- Studio dossier continues saved `32b2d5c` on `docs/studio-premium-cost-safety-20261105`; documentation only, pending review.
+- 70 focused V1 tests + 2 Academy checks + 8 local Studio tests pass; TAK-TAK routing/trial suites pass. Browser proof is synthetic actual-component QA with pre-existing React18, not authenticated React19/Next/database/provider E2E. Full framework checks remain pending after the earlier installation rejection. Nothing merged, deployed, scheduled or purchased.
+
+— STUDIO-ENGINE — Codex

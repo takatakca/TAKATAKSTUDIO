@@ -58,3 +58,20 @@ See `05_DESIGN_AGENT_CHECKPOINT.md`: redesigned V1 Studio, manual scene editor, 
 — STUDIO-ENGINE — Codex
 
 Saved source: V1 `48d028a245b88a0400c4f9dde4412dc07b675b67` (draft #256); Academy `704d766ad4119d8801367ce8afa3e8626cd8f4fd` (draft #2). 19 V1 + 2 Academy focused checks passed. See `05_DESIGN_AGENT_CHECKPOINT.md` for exact boundaries. — STUDIO-ENGINE — Codex
+
+2026-11-05 — STUDIO-ENGINE — Codex (before resumed validation): Restored the saved V1, Studio, Academy and KnowledgeAI sources into the new workspace; current draft heads match the handoff. Reviewed current board and open V1 PR titles. Continue the existing Studio lane. Audit tenant boundaries, worker ambiguity/attempt limits, Social handoff races, provenance and desktop/mobile behavior before extending media execution. Preserve the dependency-installation rejection; no alternative installer or remote CI, deployment, scheduler or provider spend.
+
+
+2026-11-05 — STUDIO-ENGINE — Codex (during resumed implementation): Built the premium Create/Projects/Library/Your Agent/Scheduled/Apps navigation, tenant-scoped paginated library, guarded scene loading and transactional scene saves, one-attempt worker/held reconciliation, fresh Social handoff checks, retained request/model/token evidence and bounded retail plan quotes. The owner confirmed SONGER; official sources support a manual companion workflow, not unverified website automation. Cost-ranked routing and reuse helpers are policy only; supplier costs/margins and live parallel agents are not operational. Full dependency/framework/database/provider validation remains pending. See 06_PREMIUM_COST_SAFETY_CHECKPOINT.md.
+
+2026-11-05 — STUDIO-ENGINE — Codex (after focused validation): 70 V1 focused tests, TAK-TAK routing/trial suites, 8 local Studio tests and 2 Academy checks pass. Actual-component synthetic browser checks pass at desktop/320/390/768 px; drawer screenshots and controls were visually reviewed and corrected. Existing React18/tool runtime is not the target React19/Node22 framework. Pure modules pass isolated ES2017 strict checking; database adapter syntax/service fixtures pass, real database races/full framework/provider E2E remain pending. Both Studio flags stay off. Source SHAs will be captured in the GitHub PR and Drive receipt after synchronization.
+
+
+## Saved continuation source receipts
+
+- V1 draft PR #256: `bb80d0cce4a0fe640b5a07d35114b7bdcbf55a96` — https://github.com/takatakca/takatak-v1/pull/256
+- Academy draft PR #2: `2f939ae67972274b66cb88c8bf9067f72dbf856c` — https://github.com/takatakca/ACADEMYTAKATAK/pull/2
+- Studio dossier continues saved `32b2d5c` on `docs/studio-premium-cost-safety-20261105`; documentation only, pending review.
+- 70 focused V1 tests + 2 Academy checks + 8 local Studio tests pass; TAK-TAK routing/trial suites pass. Browser proof is synthetic actual-component QA with pre-existing React18, not authenticated React19/Next/database/provider E2E. Full framework checks remain pending after the earlier installation rejection. Nothing merged, deployed, scheduled or purchased.
+
+— STUDIO-ENGINE — Codex
