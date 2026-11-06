@@ -1,0 +1,50 @@
+#!/usr/bin/with-contenv bash
+# TAKATAK Control Room — records this screen while someone holds it.
+# The control room writes /recordings/control/screen-<id>.active (the
+# holder's name) when a person takes the screen and removes it on release.
+# Each file is at most RECORD_SEGMENT_SECONDS long and is written as a
+# fragmented MP4, so a file cut short (crash, restart) stays playable.
+
+SCREEN_ID="${SCREEN_ID:-0}"
+MARKER="/recordings/control/screen-${SCREEN_ID}.active"
+OUT="/recordings/screens/s$(printf %02d "${SCREEN_ID}")"
+FPS="${RECORD_FPS:-4}"
+SEGMENT="${RECORD_SEGMENT_SECONDS:-600}"
+
+holder() { head -c 40 "$MARKER" 2>/dev/null | tr -cd 'a-z0-9_-'; }
+# The desktop follows the size of its tile in the browser: a new file starts
+# whenever it changes, so the whole screen is always in the picture.
+screen_size() { xdpyinfo 2>/dev/null | awk '/dimensions:/{print $2; exit}'; }
+
+until xset q >/dev/null 2>&1; do sleep 1; done
+echo "[recorder] screen ${SCREEN_ID} ready (${FPS} fps, ${SEGMENT}s segments)"
+
+while true; do
+  if [ ! -f "$MARKER" ]; then
+    sleep 2
+    continue
+  fi
+  who="$(holder)"
+  day="$(date -u +%F)"
+  mkdir -p "$OUT/$day"
+  file="$OUT/$day/$(date -u +%H-%M-%S)_${who:-unknown}.mp4"
+  size="$(screen_size)"
+  if [ -z "$size" ]; then
+    sleep 2
+    continue
+  fi
+  ffmpeg -nostdin -loglevel error -f x11grab -framerate "$FPS" -video_size "$size" -draw_mouse 1 -i "$DISPLAY" \
+    -t "$SEGMENT" -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -c:v libx264 -g "$((FPS * 10))" -preset veryfast -crf 34 -pix_fmt yuv420p -movflags +frag_keyframe+empty_moov+default_base_moof "$file" &
+  pid=$!
+  echo "[recorder] recording ${file} for ${who:-unknown}"
+  while kill -0 "$pid" 2>/dev/null; do
+    if [ ! -f "$MARKER" ] || [ "$(holder)" != "$who" ] || [ "$(screen_size)" != "$size" ]; then
+      kill -INT "$pid" 2>/dev/null
+      break
+    fi
+    sleep 2
+  done
+  wait "$pid" 2>/dev/null
+  chown 1000:1000 "$file" 2>/dev/null
+  sleep 1
+done

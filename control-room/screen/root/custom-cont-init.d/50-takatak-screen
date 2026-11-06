@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+# TAKATAK Control Room — the shared recordings folder must be writable by the
+# control room (uid 1000) for its markers and webcam files.
+mkdir -p /recordings/control /recordings/screens
+chown 1000:1000 /recordings /recordings/control /recordings/screens 2>/dev/null || true

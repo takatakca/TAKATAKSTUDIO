@@ -1,0 +1,105 @@
+# TAKATAK Control Room — deploy as one "Docker Compose" resource in Coolify
+# (the second server, NOT the TAKATAK-V1 one). Only the control-room service
+# gets a domain; the 6 screens are reachable only through it, at /s01/ … /s06/
+# like the Food Hub screens. Same screen image as Food Hub (linuxserver/chromium).
+x-screen: &screen
+  build: ./screen
+  restart: unless-stopped
+  shm_size: "1gb"
+  security_opt:
+    - seccomp=unconfined
+  environment: &screen-env
+    PUID: "1000"
+    PGID: "1000"
+    TZ: America/Toronto
+    DISABLE_IPV6: "true"
+    # X11 desktop (not Wayland) so the recorder can capture the screen with ffmpeg.
+    PIXELFLUX_WAYLAND: "false"
+    CUSTOM_USER: abc
+    PASSWORD: ${SCREEN_PASSWORD:?set SCREEN_PASSWORD}
+    RECORD_FPS: ${RECORD_FPS:-4}
+    RECORD_SEGMENT_SECONDS: ${RECORD_SEGMENT_SECONDS:-600}
+    # The 4 work sites open in each screen; each screen keeps its own sign-ins.
+    CHROME_CLI: --hide-crash-restore-bubble ${SCREEN_START_URLS:-https://chatgpt.com https://claude.ai https://github.com https://cursor.com/agents}
+  # screens: the internal network the Control Room reaches them on (no port is
+  # published). screens-out: their own way out to the Internet (ChatGPT, Claude,
+  # GitHub, Cursor), separate from the Control Room's network.
+  networks: [screens, screens-out]
+
+services:
+  control-room:
+    build: ./app
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:?set PUBLIC_ORIGIN}
+      SMS_MODE: ${SMS_MODE:-twilio}
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID:-}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN:-}
+      TWILIO_VERIFY_SERVICE_SID: ${TWILIO_VERIFY_SERVICE_SID:-}
+      SCREEN_PASSWORD: ${SCREEN_PASSWORD:?set SCREEN_PASSWORD}
+      SCREEN_COUNT: "6"
+      SUPERVISORS: ${SUPERVISORS:-takatak}
+      CAMERA_REQUIRED: ${CAMERA_REQUIRED:-true}
+    volumes:
+      - control-data:/data
+      - recordings:/recordings
+    expose:
+      - "8080"
+    networks: [default, screens]
+    depends_on: [screen-1, screen-2, screen-3, screen-4, screen-5, screen-6]
+
+  screen-1:
+    <<: *screen
+    environment: { <<: *screen-env, SCREEN_ID: "1", SUBFOLDER: /s01/, TITLE: "TAKATAK Écran 1" }
+    volumes: [screen-1:/config, recordings:/recordings]
+  screen-2:
+    <<: *screen
+    environment: { <<: *screen-env, SCREEN_ID: "2", SUBFOLDER: /s02/, TITLE: "TAKATAK Écran 2" }
+    volumes: [screen-2:/config, recordings:/recordings]
+  screen-3:
+    <<: *screen
+    environment: { <<: *screen-env, SCREEN_ID: "3", SUBFOLDER: /s03/, TITLE: "TAKATAK Écran 3" }
+    volumes: [screen-3:/config, recordings:/recordings]
+  screen-4:
+    <<: *screen
+    environment: { <<: *screen-env, SCREEN_ID: "4", SUBFOLDER: /s04/, TITLE: "TAKATAK Écran 4" }
+    volumes: [screen-4:/config, recordings:/recordings]
+  screen-5:
+    <<: *screen
+    environment: { <<: *screen-env, SCREEN_ID: "5", SUBFOLDER: /s05/, TITLE: "TAKATAK Écran 5" }
+    volumes: [screen-5:/config, recordings:/recordings]
+  screen-6:
+    <<: *screen
+    environment: { <<: *screen-env, SCREEN_ID: "6", SUBFOLDER: /s06/, TITLE: "TAKATAK Écran 6" }
+    volumes: [screen-6:/config, recordings:/recordings]
+
+  archiver:
+    image: rclone/rclone:1.71.2
+    restart: unless-stopped
+    entrypoint: ["/bin/sh", "/archive.sh"]
+    environment:
+      RETENTION_DAYS: ${RETENTION_DAYS:-30}
+      ARCHIVE_REMOTE: ${ARCHIVE_REMOTE:-gdrive:TAKATAK-Salle-de-controle}
+      RCLONE_CONFIG_GDRIVE_TYPE: drive
+      RCLONE_CONFIG_GDRIVE_SCOPE: drive.file
+      RCLONE_CONFIG_GDRIVE_TOKEN: ${GDRIVE_RCLONE_TOKEN:-}
+    volumes:
+      - recordings:/recordings
+      - ./archiver/archive.sh:/archive.sh:ro
+    networks: [default]
+
+volumes:
+  control-data:
+  recordings:
+  screen-1:
+  screen-2:
+  screen-3:
+  screen-4:
+  screen-5:
+  screen-6:
+
+networks:
+  screens:
+    internal: true
+  screens-out: {}
