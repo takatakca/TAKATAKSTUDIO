@@ -1,13 +1,17 @@
 # TAKATAK Control Room — deploy as one "Docker Compose" resource in Coolify
 # (the second server, NOT the TAKATAK-V1 one). Only the control-room service
 # gets a domain; the 6 screens are reachable only through it, at /s01/ … /s06/
-# like the Food Hub screens. Same screen image as Food Hub (linuxserver/chromium).
+# like the Food Hub screens. Screens: full KDE desktops from the same linuxserver/Selkies family as Food Hub.
 x-screen: &screen
   build: ./screen
   restart: unless-stopped
-  shm_size: "1gb"
+  shm_size: "2gb"
+  # The Flathub app store isolates each app (bubblewrap): it needs these three
+  # openings. The screen stays unprivileged (no --privileged, no host device).
   security_opt:
     - seccomp=unconfined
+    - apparmor=unconfined
+    - systempaths=unconfined
   environment: &screen-env
     PUID: "1000"
     PGID: "1000"
@@ -19,8 +23,8 @@ x-screen: &screen
     PASSWORD: ${SCREEN_PASSWORD:?set SCREEN_PASSWORD}
     RECORD_FPS: ${RECORD_FPS:-4}
     RECORD_SEGMENT_SECONDS: ${RECORD_SEGMENT_SECONDS:-600}
-    # The 4 work sites open in each screen; each screen keeps its own sign-ins.
-    CHROME_CLI: --hide-crash-restore-bubble ${SCREEN_START_URLS:-https://chatgpt.com https://claude.ai https://github.com https://cursor.com/agents}
+    # Sites Chromium opens at the screen's first login; each screen keeps its own sign-ins.
+    START_URLS: ${SCREEN_START_URLS:-https://chatgpt.com https://claude.ai https://github.com https://cursor.com/agents}
   # screens: the internal network the Control Room reaches them on (no port is
   # published). screens-out: their own way out to the Internet (ChatGPT, Claude,
   # GitHub, Cursor), separate from the Control Room's network.

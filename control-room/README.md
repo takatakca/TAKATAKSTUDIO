@@ -1,11 +1,23 @@
 # TAKATAK — Salle de contrôle
 
-Six virtual screens for the TAKATAK team (**takatak**, **sheroz**, **abdullah**), each with its own Chromium and its own signed-in ChatGPT, Claude, GitHub and Cursor accounts. It reuses the Food Hub screens technology (`takatakca/foodhubca`, `deploy/screens`):
+Six virtual screens for the TAKATAK team (**takatak**, **sheroz**, **abdullah**). Each screen is a **complete, separate computer**: a KDE desktop with its own folders, its own apps and its own signed-in ChatGPT, Claude, GitHub and Cursor accounts. It reuses the Food Hub screens technology (`takatakca/foodhubca`, `deploy/screens`):
 
-- the same image, `linuxserver/chromium` (pinned);
+- the same family of images, `linuxserver` + Selkies streaming (here `webtop` KDE, pinned);
 - the same `/s01/` … `/s06/` addresses;
 - the same wall: 1, 2, 3, 4 or 6 screens, **Onglets**, and **Personnalisé** (a 12 × 12 board where you move and resize each screen);
 - the same shared layout.
+
+In each screen:
+
+- **App store**: Discover, connected to Flathub (thousands of apps: Slack, Discord, Zoom, Obsidian, LibreOffice, GIMP, OBS…). Installs go to the screen's user folder, no administrator needed.
+- **Already installed**:
+  - **Chromium**, opening on ChatGPT, Claude, GitHub and Cursor, with the **"IA TAKATAK"** bar of 53 AI sites (assistants, code, images, video, voice, API consoles). Any of them can be installed as its own window (⋮ → "Install the app").
+  - **Cursor** and **VS Code** (desktop apps), **git** and **GitHub CLI** (`gh`) to save, edit and push.
+  - **Claude Code** (`claude`) and **Codex** (`codex`) in the terminal (Konsole).
+  - Dolphin (files), Kate (text).
+- **Folders**: Desktop, Documents, Downloads, Projets, Images, Vidéos. Everything is kept in the screen's volume (`screen-N`) across restarts and updates.
+- **Separate**: one screen = one container. What happens in one never touches the others or the server.
+- Official ChatGPT, Claude and Copilot desktop apps exist only for Windows and Mac; their web versions have the same features. A Windows screen (Microsoft Store) remains possible later, at higher cost.
 
 Added for the team:
 
@@ -21,7 +33,7 @@ Added for the team:
 | Folder | What it is |
 |---|---|
 | `app/` | The Salle de contrôle web app (Node 22, no dependencies): accounts, SMS, locks, camera, notes, wall, protected relay to the screens. |
-| `screen/` | A screen's image: Food Hub Chromium + ffmpeg + the recorder. |
+| `screen/` | A screen's image: KDE desktop + Discover/Flathub + Cursor, VS Code, git/gh, Claude Code, Codex + the recorder. |
 | `archiver/` | rclone: 30 days on the server, then Google Drive. |
 | `docker-compose.yml` | The whole stack for Coolify. |
 | `docker-compose.dev.yml` | Local trial only (codes in the log, 2 screens). Never deploy it. |
@@ -37,7 +49,8 @@ Added for the team:
 5. **Google Drive**:
    - on a computer, run `rclone authorize "drive"`, sign in with the Google account that will hold the archives, and paste the JSON it prints into `GDRIVE_RCLONE_TOKEN`;
    - without it, nothing is archived **and nothing is deleted**.
-6. **Server**: about **16 GB of RAM and 4–8 vCPU** for 6 screens (each Chromium + recording ≈ 1.5–2.5 GB). Plan for disk space for 30 days of recordings.
+6. **Server**: about **24–32 GB of RAM and 8 vCPU** for 6 KDE desktops (≈ 3–4 GB each when in use, with Cursor and Chromium open). Plan at least 200 GB of disk: apps installed from the store and 30 days of recordings.
+   The screens use `seccomp`, `apparmor` and `systempaths=unconfined`. Flathub's app isolation (bubblewrap) needs these. They stay **unprivileged**: no `--privileged`, no host device, no published port.
 7. **Deploy**, then in Coolify → `control-room` → **Terminal**:
 
    ```sh
@@ -49,7 +62,8 @@ Added for the team:
    Each command prints a one-time link (48 h). Send it to the person: they choose their password there. Then they log in with password + SMS code.
    - `node bin/admin.mjs status` shows the accounts and screens.
    - `node bin/admin.mjs logout-all` signs everyone out.
-8. **Accounts inside the screens**: log in, take each screen and **type in the ChatGPT, Claude, GitHub and Cursor accounts yourself**. Each screen keeps its own sign-ins (`screen-N` volume) after restarts. Never send these passwords by chat or email.
+8. **Accounts inside the screens**: log in, take each screen and **type in the ChatGPT, Claude, GitHub and Cursor accounts yourself**, plus `gh auth login` in the terminal to push to GitHub. Each screen keeps its own sign-ins (`screen-N` volume) after restarts. Never send these passwords by chat or email.
+9. **Files**: the Selkies sidebar of each screen (left edge) has the "Upload" and "Download" buttons for sending files from your computer and retrieving them (present in Selkies, to be tested end to end on the server). Inside the screen, Dolphin handles the folders.
 
 ## Using it
 
