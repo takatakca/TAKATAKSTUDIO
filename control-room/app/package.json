@@ -1,0 +1,13 @@
+{
+  "name": "takatak-control-room",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TAKATAK Control Room: 3 accounts with SMS login, 6 recorded virtual screens, journal.",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.mjs",
+    "admin": "node --disable-warning=ExperimentalWarning bin/admin.mjs",
+    "test": "node --disable-warning=ExperimentalWarning --test \"test/*.test.mjs\""
+  }
+}

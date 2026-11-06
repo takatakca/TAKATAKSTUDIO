@@ -1,0 +1,126 @@
+/* TAKATAK Control Room — electric blue on deep navy (BRAND.md). Green is for status only. */
+:root {
+  --navy: #0a1230;
+  --navy-2: #111b45;
+  --navy-3: #1a2760;
+  --blue: #1f6bff;
+  --blue-2: #4d8dff;
+  --text: #e8eeff;
+  --muted: #9aa8d6;
+  --ok: #22c55e;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--navy);
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: var(--navy); }
+body.room { height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+button, input, select, textarea { font: inherit; }
+button {
+  background: var(--blue); color: #fff; border: 0; border-radius: 8px;
+  padding: 0.45rem 0.8rem; cursor: pointer;
+}
+button:hover { background: var(--blue-2); }
+button.ghost { background: transparent; border: 1px solid var(--navy-3); color: var(--text); }
+button.ghost:hover { border-color: var(--blue); }
+button.link { background: none; color: var(--muted); text-decoration: underline; padding: 0.3rem 0; }
+button:disabled { opacity: 0.6; cursor: wait; }
+input, select, textarea {
+  width: 100%; background: var(--navy-2); color: var(--text);
+  border: 1px solid var(--navy-3); border-radius: 8px; padding: 0.55rem 0.7rem;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--blue); border-color: transparent; }
+[hidden] { display: none !important; }
+
+/* Login and setup */
+.auth { display: grid; place-items: center; padding: 1rem; }
+.auth-card {
+  width: min(420px, 100%); background: var(--navy-2); border: 1px solid var(--navy-3);
+  border-radius: 16px; padding: 1.6rem;
+}
+.auth-card h1 { margin: 0 0 0.4rem; font-size: 1.4rem; }
+.auth-card h1 span { display: block; color: var(--blue-2); font-size: 1rem; font-weight: 500; }
+.auth-card form { display: grid; gap: 0.9rem; margin-top: 1rem; }
+.auth-card label { display: grid; gap: 0.35rem; color: var(--muted); font-size: 0.9rem; }
+.notice { color: var(--muted); font-size: 0.85rem; margin: 0; }
+#message { min-height: 1.2em; color: var(--warn); }
+
+/* Room */
+.topbar {
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  padding: 0.6rem 1rem; background: var(--navy-2); border-bottom: 1px solid var(--navy-3);
+}
+.brand span { color: var(--blue-2); font-weight: 500; margin-left: 0.3rem; }
+.views, .tools { display: flex; align-items: center; gap: 0.3rem; flex-wrap: wrap; }
+.views button { background: var(--navy-3); padding: 0.3rem 0.7rem; }
+.views button.active { background: var(--blue); }
+.me { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; }
+.rec { font-size: 0.85rem; color: var(--warn); }
+.rec.on { color: var(--danger); }
+#camera-preview { width: 72px; height: 40px; object-fit: cover; border-radius: 6px; background: #000; }
+.banner { margin: 0; padding: 0.6rem 1rem; background: #3b2a06; color: #ffd78a; }
+
+.workspace { display: flex; flex: 1; min-height: 0; }
+.wall-area { flex: 1; display: flex; flex-direction: column; min-width: 0; background: var(--navy); }
+.wall-area:fullscreen { height: 100vh; }
+.tabbar { display: flex; gap: 0.3rem; padding: 0.4rem 0.6rem 0; overflow-x: auto; }
+.tabbar button { background: var(--navy-3); padding: 0.3rem 0.8rem; border-radius: 8px 8px 0 0; white-space: nowrap; }
+.tabbar button.on { background: var(--blue); }
+.unplaced { display: flex; gap: 0.4rem; flex-wrap: wrap; padding: 0.4rem 1rem; background: var(--navy-2); }
+
+/* Grid views (1, 2, 3, 4, 6) and tabs: CSS grid; columns set by app.js. */
+.wall { flex: 1; position: relative; display: grid; gap: 0.6rem; padding: 0.6rem; overflow: auto; min-height: 0; }
+.wall[data-view="custom"] { overflow: hidden; }
+.wall[data-view="tabs"] { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+/* Custom: a 12 x 12 board, each tile placed in % by app.js. */
+.wall[data-view="custom"] { display: block; padding: 0; }
+.wall[data-view="custom"] .tile { position: absolute; min-height: 0; border-radius: 6px; }
+.wall.arranging { background-image: linear-gradient(var(--navy-3) 1px, transparent 1px), linear-gradient(90deg, var(--navy-3) 1px, transparent 1px); background-size: calc(100% / 12) calc(100% / 12); }
+@media (max-width: 900px) {
+  .wall:not([data-view="custom"]) { grid-template-columns: 1fr !important; grid-template-rows: none !important; overflow: auto; }
+}
+
+.tile {
+  display: flex; flex-direction: column; min-height: 260px;
+  background: var(--navy-2); border: 1px solid var(--navy-3); border-radius: 12px; overflow: hidden;
+}
+.tile.mine { border-color: var(--blue); }
+.tile.busy { opacity: 0.85; }
+.tile.dragging { opacity: 0.4; }
+.tile[hidden] { display: none; }
+.tile header { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.6rem; background: var(--navy-3); }
+.tile-bar { cursor: grab; user-select: none; }
+.tile .state { color: var(--muted); font-size: 0.85rem; }
+.tile.mine .state { color: var(--ok); }
+.tile .actions { margin-left: auto; display: flex; gap: 0.3rem; }
+.tile .actions button { padding: 0.25rem 0.55rem; font-size: 0.85rem; }
+.tile .body { flex: 1; display: flex; min-height: 0; }
+.tile iframe { flex: 1; width: 100%; border: 0; background: #000; }
+.tile:fullscreen { border-radius: 0; }
+.placeholder { margin: auto; padding: 1rem; color: var(--muted); text-align: center; }
+
+.side {
+  width: 360px; overflow: auto; padding: 0.8rem; background: var(--navy-2); border-left: 1px solid var(--navy-3);
+}
+.side h2 { font-size: 1rem; margin: 1rem 0 0.5rem; }
+.side form { display: grid; gap: 0.5rem; }
+.list { list-style: none; padding: 0; margin: 0.6rem 0; display: grid; gap: 0.35rem; font-size: 0.85rem; color: var(--muted); }
+.list a { color: var(--blue-2); word-break: break-all; }
+.hint { color: var(--muted); font-size: 0.8rem; }
+
+/* Arrange layer (custom board): covers the screen so the drag never reaches it. */
+.arrange-layer {
+  position: absolute; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center;
+  background: rgba(10, 132, 255, 0.18); border: 2px dashed var(--blue); cursor: move; touch-action: none;
+}
+.arrange-layer[hidden] { display: none; }
+.arrange-layer:focus { outline: 3px solid var(--blue-2); }
+.arrange-name { font-weight: 700; background: var(--navy-2); padding: 0.3rem 0.7rem; border-radius: 6px; }
+.arrange-remove { position: absolute; top: 2.6rem; right: 0.4rem; }
+.arrange-resize {
+  position: absolute; right: 0; bottom: 0; width: 22px; height: 22px; cursor: nwse-resize;
+  background: linear-gradient(135deg, transparent 50%, var(--blue) 50%);
+}
+.tile { position: relative; }
