@@ -53,3 +53,8 @@ Source work is additive and preserves existing identity, billing and Social conn
 - Neither source was merged or deployed. Prior foundation and KnowledgeAI docs PR #7 remain preserved.
 
 — STUDIO-ENGINE — Codex
+
+
+## Later continuation
+
+The premium workspace, Library, cost evidence and safety continuation is recorded in `06_PREMIUM_COST_SAFETY_CHECKPOINT.md`. This document preserves the earlier 19-test source checkpoint; use the later receipt for the current candidate. — STUDIO-ENGINE — Codex
