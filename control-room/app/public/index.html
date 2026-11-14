@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAKATAK · Salle de contrôle</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="room">
+  <header class="topbar">
+    <strong class="brand">TAKATAK <span>Salle de contrôle</span></strong>
+    <div class="views" role="group" aria-label="Affichage">
+      <button data-view="1" title="1 écran">1</button>
+      <button data-view="2" title="2 écrans">2</button>
+      <button data-view="3" title="3 écrans">3</button>
+      <button data-view="4" title="4 écrans">4</button>
+      <button data-view="6" title="6 écrans">6</button>
+      <button data-view="tabs" title="Un grand écran, les autres en onglets">Onglets</button>
+      <button data-view="custom" title="Placez et redimensionnez chaque écran">Personnalisé</button>
+    </div>
+    <div class="tools">
+      <button id="arrange" class="ghost" hidden>Arranger</button>
+      <button id="even-grid" class="ghost" hidden>Grille égale</button>
+      <button id="share-layout" class="ghost" hidden title="Cette disposition devient celle de tous les appareils sans disposition à eux">Partager la disposition</button>
+      <button id="use-shared" class="ghost" title="Reprendre la disposition partagée sur cet appareil">Disposition partagée</button>
+      <button id="wall-full" class="ghost" title="Plein écran">⛶</button>
+    </div>
+    <div class="me">
+      <span class="rec" id="rec-state">Caméra…</span>
+      <video id="camera-preview" muted playsinline autoplay></video>
+      <span id="who"></span>
+      <button id="toggle-side" class="ghost">Journal</button>
+      <button id="logout" class="ghost">Quitter</button>
+    </div>
+  </header>
+
+  <p id="banner" class="banner" hidden></p>
+  <div id="unplaced" class="unplaced" hidden></div>
+
+  <div class="workspace">
+    <section id="wall-area" class="wall-area">
+      <div id="tabbar" class="tabbar" role="tablist" aria-label="Écrans" hidden></div>
+      <main id="wall" class="wall" data-view="6"></main>
+    </section>
+
+    <aside id="side" class="side" hidden>
+      <section>
+        <h2>Notes</h2>
+        <form id="note-form">
+          <select name="screen" aria-label="Écran">
+            <option value="">Général</option>
+          </select>
+          <textarea name="text" rows="3" maxlength="2000" placeholder="Ce que je fais, pour qui, le résultat…" required></textarea>
+          <button type="submit">Ajouter la note</button>
+        </form>
+        <ul id="notes" class="list"></ul>
+      </section>
+      <section id="supervisor" hidden>
+        <h2>Journal des accès</h2>
+        <ul id="events" class="list"></ul>
+        <h2>Enregistrements</h2>
+        <p class="hint">Gardés 30 jours sur le serveur, puis envoyés dans Google Drive et effacés du serveur.</p>
+        <ul id="recordings" class="list"></ul>
+      </section>
+    </aside>
+  </div>
+
+  <template id="tile-template">
+    <article class="tile">
+      <header class="tile-bar" title="Glisser sur un autre écran pour échanger · double-clic pour agrandir">
+        <strong class="title"></strong>
+        <span class="state"></span>
+        <span class="actions">
+          <button class="take">Prendre</button>
+          <button class="release ghost">Libérer</button>
+          <button class="expand ghost" title="Plein écran">⛶</button>
+          <button class="force ghost" hidden>Forcer</button>
+          <button class="admin-lock ghost" hidden>Bloquer</button>
+        </span>
+      </header>
+      <div class="body"><p class="placeholder"></p></div>
+      <div class="arrange-layer" tabindex="0" hidden>
+        <span class="arrange-name"></span>
+        <button class="arrange-remove ghost" title="Retirer du tableau">✕</button>
+        <span class="arrange-resize" aria-hidden="true"></span>
+      </div>
+    </article>
+  </template>
+
+  <script type="module" src="/assets/app.js"></script>
+</body>
+</html>

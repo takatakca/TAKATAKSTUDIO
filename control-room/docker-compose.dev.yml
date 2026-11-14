@@ -1,0 +1,17 @@
+# Local trial only (never deploy this file): console SMS codes, port 8080 on
+# the host, screens 1 and 2 only.
+services:
+  control-room:
+    environment:
+      NODE_ENV: development
+      SMS_MODE: console
+      COOKIE_SECURE: "false"
+      SCREEN_COUNT: "2"
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on: !override [screen-1, screen-2]
+  screen-3: { profiles: [all] }
+  screen-4: { profiles: [all] }
+  screen-5: { profiles: [all] }
+  screen-6: { profiles: [all] }
+  archiver: { profiles: [all] }

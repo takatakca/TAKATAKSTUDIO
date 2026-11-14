@@ -46,3 +46,34 @@ See `05_DESIGN_AGENT_CHECKPOINT.md`: redesigned V1 Studio, manual scene editor, 
 — STUDIO-ENGINE — Codex
 
 Saved source: V1 `48d028a245b88a0400c4f9dde4412dc07b675b67` (draft #256); Academy `704d766ad4119d8801367ce8afa3e8626cd8f4fd` (draft #2). 19 V1 + 2 Academy focused checks passed. See `05_DESIGN_AGENT_CHECKPOINT.md` for exact boundaries. — STUDIO-ENGINE — Codex
+
+## 2026-11-06 — Salle de contrôle (control-room/) — signed: CONTROL-ROOM — Claude Code
+
+Owner's request: control room for the TAKATAK team (takatak, sheroz, abdullah), 6 screens, SMS at every login, locks, camera and recording, notes, Drive archive after 30 days. Reuses the Food Hub screens technology (linuxserver/Selkies, `/s01/`…`/s06/`, 1/2/3/4/6 grid, tabs, custom board, shared layout).
+
+Owner's decision 2026-11-06 ("most premium, files, folders, a real desktop, apps from a store"): **each screen = a separate KDE desktop** (pinned webtop debian-kde) with Discover + Flathub, Cursor, VS Code, git/gh, Claude Code, Codex, Chromium + "IA TAKATAK" bookmarks (53 sites). Official ChatGPT/Claude/Copilot desktop apps do not exist on Linux (web apps instead); Windows + Microsoft Store remains a later option, at higher cost.
+
+Verified locally (Docker):
+- 16/16 node tests;
+- browser E2E: login with password + console SMS code, camera on, take a screen, HTTP and WebSocket proxy, KDE desktop displayed in the tile, views 6/tabs/custom, move and resize, shared layout;
+- recording: MP4 segments readable, new segment when the size changes;
+- Flathub install and launch of an app (Flatseal) as the desktop user;
+- Chromium autostart with the managed bookmarks.
+
+Found and fixed along the way:
+- the screens had no Internet (internal network): added a separate `screens-out` network;
+- the Chromium image was in Wayland mode, so nothing was recorded: X11 mode now;
+- odd capture sizes broke x264: rounded to even;
+- resize corner off-screen: page laid out as a flex column.
+
+Not done / not verified:
+- no deployment (the owner paused it; never on the TAKATAK-V1 Coolify);
+- real Twilio not tested (console mode only);
+- Drive archive not tested (no token);
+- Selkies upload/download not tested end to end;
+- Docker Hub 429 during the build (classic builder used locally).
+
+Next steps:
+- the owner chooses the second Coolify server (24–32 GB RAM) and provides the Twilio Verify and rclone token in Coolify;
+- `node bin/admin.mjs prepare` for each of the 3 accounts;
+- the owner signs into each screen himself.

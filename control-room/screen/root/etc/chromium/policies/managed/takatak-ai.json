@@ -1,0 +1,255 @@
+{
+  "ManagedBookmarks": [
+    {
+      "toplevel_name": "IA TAKATAK"
+    },
+    {
+      "name": "Assistants",
+      "children": [
+        {
+          "name": "ChatGPT",
+          "url": "https://chatgpt.com"
+        },
+        {
+          "name": "Claude",
+          "url": "https://claude.ai"
+        },
+        {
+          "name": "Gemini",
+          "url": "https://gemini.google.com"
+        },
+        {
+          "name": "Microsoft Copilot",
+          "url": "https://copilot.microsoft.com"
+        },
+        {
+          "name": "Perplexity",
+          "url": "https://www.perplexity.ai"
+        },
+        {
+          "name": "Grok",
+          "url": "https://grok.com"
+        },
+        {
+          "name": "Meta AI",
+          "url": "https://www.meta.ai"
+        },
+        {
+          "name": "Mistral Le Chat",
+          "url": "https://chat.mistral.ai"
+        },
+        {
+          "name": "DeepSeek",
+          "url": "https://chat.deepseek.com"
+        },
+        {
+          "name": "Qwen",
+          "url": "https://chat.qwen.ai"
+        },
+        {
+          "name": "Kimi",
+          "url": "https://www.kimi.com"
+        },
+        {
+          "name": "Poe",
+          "url": "https://poe.com"
+        },
+        {
+          "name": "HuggingChat",
+          "url": "https://huggingface.co/chat"
+        },
+        {
+          "name": "NotebookLM",
+          "url": "https://notebooklm.google.com"
+        },
+        {
+          "name": "Google AI Studio",
+          "url": "https://aistudio.google.com"
+        }
+      ]
+    },
+    {
+      "name": "Code",
+      "children": [
+        {
+          "name": "GitHub",
+          "url": "https://github.com"
+        },
+        {
+          "name": "GitHub Copilot",
+          "url": "https://github.com/copilot"
+        },
+        {
+          "name": "Cursor",
+          "url": "https://cursor.com/agents"
+        },
+        {
+          "name": "Claude Code",
+          "url": "https://claude.ai/code"
+        },
+        {
+          "name": "OpenAI Codex",
+          "url": "https://chatgpt.com/codex"
+        },
+        {
+          "name": "Replit",
+          "url": "https://replit.com"
+        },
+        {
+          "name": "Lovable",
+          "url": "https://lovable.dev"
+        },
+        {
+          "name": "Bolt",
+          "url": "https://bolt.new"
+        },
+        {
+          "name": "v0",
+          "url": "https://v0.app"
+        },
+        {
+          "name": "Windsurf",
+          "url": "https://windsurf.com"
+        }
+      ]
+    },
+    {
+      "name": "Images et design",
+      "children": [
+        {
+          "name": "Midjourney",
+          "url": "https://www.midjourney.com"
+        },
+        {
+          "name": "Ideogram",
+          "url": "https://ideogram.ai"
+        },
+        {
+          "name": "Leonardo",
+          "url": "https://leonardo.ai"
+        },
+        {
+          "name": "Adobe Firefly",
+          "url": "https://firefly.adobe.com"
+        },
+        {
+          "name": "Canva",
+          "url": "https://www.canva.com"
+        },
+        {
+          "name": "Krea",
+          "url": "https://www.krea.ai"
+        },
+        {
+          "name": "Recraft",
+          "url": "https://www.recraft.ai"
+        },
+        {
+          "name": "Figma",
+          "url": "https://www.figma.com"
+        }
+      ]
+    },
+    {
+      "name": "Vidéo",
+      "children": [
+        {
+          "name": "Runway",
+          "url": "https://app.runwayml.com"
+        },
+        {
+          "name": "Google Flow",
+          "url": "https://labs.google/flow"
+        },
+        {
+          "name": "Sora",
+          "url": "https://sora.chatgpt.com"
+        },
+        {
+          "name": "Pika",
+          "url": "https://pika.art"
+        },
+        {
+          "name": "Luma Dream Machine",
+          "url": "https://lumalabs.ai/dream-machine"
+        },
+        {
+          "name": "Kling",
+          "url": "https://klingai.com"
+        },
+        {
+          "name": "Hailuo",
+          "url": "https://hailuoai.video"
+        },
+        {
+          "name": "HeyGen",
+          "url": "https://www.heygen.com"
+        },
+        {
+          "name": "Synthesia",
+          "url": "https://www.synthesia.io"
+        },
+        {
+          "name": "CapCut",
+          "url": "https://www.capcut.com"
+        }
+      ]
+    },
+    {
+      "name": "Voix et musique",
+      "children": [
+        {
+          "name": "ElevenLabs",
+          "url": "https://elevenlabs.io"
+        },
+        {
+          "name": "Suno",
+          "url": "https://suno.com"
+        },
+        {
+          "name": "Udio",
+          "url": "https://www.udio.com"
+        }
+      ]
+    },
+    {
+      "name": "Écriture et productivité",
+      "children": [
+        {
+          "name": "Notion",
+          "url": "https://www.notion.so"
+        },
+        {
+          "name": "Gamma",
+          "url": "https://gamma.app"
+        },
+        {
+          "name": "Grammarly",
+          "url": "https://www.grammarly.com"
+        }
+      ]
+    },
+    {
+      "name": "Consoles API",
+      "children": [
+        {
+          "name": "OpenAI Platform",
+          "url": "https://platform.openai.com"
+        },
+        {
+          "name": "Claude Console",
+          "url": "https://console.anthropic.com"
+        },
+        {
+          "name": "OpenRouter",
+          "url": "https://openrouter.ai"
+        },
+        {
+          "name": "Hugging Face",
+          "url": "https://huggingface.co"
+        }
+      ]
+    }
+  ],
+  "BookmarkBarEnabled": true
+}

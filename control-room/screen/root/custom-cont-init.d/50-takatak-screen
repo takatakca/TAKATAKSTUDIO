@@ -1,0 +1,36 @@
+#!/usr/bin/with-contenv bash
+# TAKATAK Control Room — screen setup at each start (first-start items only
+# when missing, so what the team changes in the screen is kept).
+
+# Shared recordings folder: writable by the control room (uid 1000) for its
+# markers and webcam files.
+mkdir -p /recordings/control /recordings/screens
+chown 1000:1000 /recordings /recordings/control /recordings/screens 2>/dev/null || true
+
+HOME_DIR=/config
+as_abc() { s6-setuidgid abc env HOME="$HOME_DIR" "$@"; }
+
+# Work folders in the screen's own home (kept in the screen-N volume).
+for d in Desktop Documents Downloads Projets Images Vidéos; do
+  [ -d "$HOME_DIR/$d" ] || as_abc mkdir -p "$HOME_DIR/$d"
+done
+
+# App store: Flathub for the desktop user (Discover installs there, no admin needed).
+as_abc flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo \
+  || echo "[takatak] Flathub not reachable now; retried at next start"
+
+# At login, Chromium opens the work sites (first start only; the team may
+# change or remove it in KDE's Autostart settings).
+AUTOSTART="$HOME_DIR/.config/autostart/takatak-sites.desktop"
+if [ ! -f "$AUTOSTART" ]; then
+  as_abc mkdir -p "$(dirname "$AUTOSTART")"
+  cat > "$AUTOSTART" <<DESKTOP
+[Desktop Entry]
+Type=Application
+Name=Sites TAKATAK
+Exec=/usr/local/bin/wrapped-chromium --start-maximized --hide-crash-restore-bubble ${START_URLS:-https://chatgpt.com https://claude.ai https://github.com https://cursor.com/agents}
+Icon=chromium
+X-KDE-autostart-phase=2
+DESKTOP
+  chown abc:abc "$AUTOSTART"
+fi

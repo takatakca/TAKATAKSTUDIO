@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAKATAK · Créer mon mot de passe</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="auth">
+  <main class="auth-card">
+    <h1>TAKATAK <span>Créer mon mot de passe</span></h1>
+    <p class="notice">Au moins 12 caractères. Ensuite, chaque connexion demande ce mot de passe et un code par texto.</p>
+    <form id="setup-form">
+      <label>Nouveau mot de passe
+        <input name="password" type="password" autocomplete="new-password" required minlength="12">
+      </label>
+      <label>Confirmer
+        <input name="confirm" type="password" autocomplete="new-password" required minlength="12">
+      </label>
+      <button type="submit">Enregistrer</button>
+    </form>
+    <p id="message" role="alert"></p>
+  </main>
+  <script src="/assets/setup.js"></script>
+</body>
+</html>
